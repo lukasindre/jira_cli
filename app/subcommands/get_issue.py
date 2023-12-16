@@ -18,6 +18,12 @@ class GetIssue(BaseSubcommand):
     )
     @click.argument("key", type=str)
     def command(key, fields):
+        """Get jira issue command.
+
+        Keyword arguments:
+        key: str -- issue key
+        fields: str -- comma separated string of desired fields
+        """
         api = initialize_api()
         field_list = split_fields(fields)
         response = api.get_issue(key, field_list)
