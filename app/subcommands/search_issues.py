@@ -1,8 +1,9 @@
-import click
 import json
 
-from app.subcommands.base_subcommand import BaseSubcommand
+import click
+
 from app.common.shared_functions import initialize_api, split_fields
+from app.subcommands.base_subcommand import BaseSubcommand
 
 
 class SearchIssues(BaseSubcommand):
@@ -17,6 +18,12 @@ class SearchIssues(BaseSubcommand):
     )
     @click.argument("jql", type=str)
     def command(jql, fields):
+        """Search Issues command.
+
+        Keyword arguments:
+        jql: str -- a JQL string to query against the Jira database.
+        fields: str -- a comma separated string of desired displayed fields.
+        """
         api = initialize_api()
         field_list = split_fields(fields)
         response = api.search_issues(jql, field_list)
