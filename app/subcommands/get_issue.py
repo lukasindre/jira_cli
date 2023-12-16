@@ -20,6 +20,6 @@ class GetIssue(BaseSubcommand):
     def command(key, fields):
         api = initialize_api()
         field_list = split_fields(fields)
-        response = api.get_issue(api, key, field_list)
+        response = api.get_issue(key, field_list)
         response.raise_for_status()
         click.echo(json.dumps(response.json(), indent=4))

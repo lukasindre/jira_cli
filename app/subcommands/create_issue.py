@@ -40,7 +40,7 @@ class CreateIssue(BaseSubcommand):
         project_json = response.json()
         project_id = project_json["id"]
         issue_types = parse_issue_types(project_json)
-        desired_issue_type_id = issue_types[get_desired_issue_type()]
+        desired_issue_type_id = issue_types[get_desired_issue_type(issue_types)]
         response = api.create_issue(project_id, desired_issue_type_id, summary)
         response.raise_for_status()
         click.echo(f"Issue created: {api.SITE_URL}/browse/{response.json()['key']}")
