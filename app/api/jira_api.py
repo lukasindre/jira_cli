@@ -37,17 +37,24 @@ class JiraApi:
         return self._post(
             path="/rest/api/3/issue",
             json={
-                "summary": summary,
-                "project": {"id": project_id},
-                "issuetype": {"id": issue_type_id},
+                "fields": {
+                    "summary": summary,
+                    "project": {"id": project_id},
+                    "issuetype": {"id": issue_type_id},
+                }
             },
         )
 
     def get_issue_transitions(self, issue_key: str) -> requests.models.Response:
-        return self.s.get(f"/rest/api/3/{issue_key}/transitions")
+        return self._get(f"/rest/api/3/issue/{issue_key}/transitions")
 
-    def transition_issue(self, issue_key: str, transition_id: str) -> requests.models.Response:
-        return self.s.post(f"/rest/api/3/{issue_key}/transitions", json={"transition": {"id": transition_id}})
+    def transition_issue(
+        self, issue_key: str, transition_id: str
+    ) -> requests.models.Response:
+        return self._post(
+            f"/rest/api/3/issue/{issue_key}/transitions",
+            json={"transition": {"id": transition_id}},
+        )
 
     def _get(
         self, path: str, params: Union[dict[str, Any] | None] = None
